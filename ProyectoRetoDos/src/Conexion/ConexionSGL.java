@@ -12,7 +12,7 @@ public class ConexionSGL {
 		String host = "127.0.0.1"; //Podríamos poner "localhost"
 		String user = "egoitz";
 		String pass = "egoitz";
-		String dtbs = "jardineria";
+		String dtbs = "tortugajuanes";
 		try{
 			Class.forName("com.mysql.jdbc.Driver"); //Inicializar el driver
 			String newConnectionURL = "jdbc:mysql://" + host + "/" + dtbs + "?" + "user=" + user + "&password=" + pass;
