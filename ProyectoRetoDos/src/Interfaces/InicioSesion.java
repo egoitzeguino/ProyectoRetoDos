@@ -48,7 +48,6 @@ public class InicioSesion extends JDialog {
         tfUsuario.setHorizontalAlignment(JTextField.CENTER);
         contentPanel.add(tfUsuario);
         tfUsuario.setColumns(10);
-
         tfUsuario.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
