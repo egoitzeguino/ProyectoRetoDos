@@ -11,6 +11,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -71,9 +73,9 @@ public class Fichar extends JDialog {
         contentPanel.add(tfDni);
         tfDni.setColumns(10);
 		
-		JLabel lbManual = new JLabel("SI HA ENTRADO A OTRA HORA INTRODUZCA MANUALMENTE");
+		JLabel lbManual = new JLabel("SI HA ENTRADO A OTRA HORA INTRODUZCA MANUALMENTE ");
 		lbManual.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lbManual.setBounds(94, 455, 368, 13);
+		lbManual.setBounds(94, 455, 510, 13);
 		contentPanel.add(lbManual);
 		
 		JLabel lbEntrada = new JLabel("HORARIO ENTRADA:");
@@ -82,7 +84,7 @@ public class Fichar extends JDialog {
 		contentPanel.add(lbEntrada);
 		
 		tfEntrada = new JTextField();
-		tfEntrada.setBounds(229, 490, 131, 19);
+		tfEntrada.setBounds(229, 490, 148, 19);
 		contentPanel.add(tfEntrada);
 		tfEntrada.setColumns(10);
 		
@@ -179,7 +181,7 @@ public class Fichar extends JDialog {
 		            Fichaje_DTO ultimoFichaje = fichajeDAO.obtenerUltimoFichajeEntrada(dniEmpleado);
 
 		            if (ultimoFichaje != null && ultimoFichaje.getHorarioSalida() == null) {
-		                // Registrar la salida
+
 		                ultimoFichaje.setHorarioSalida(new Timestamp(System.currentTimeMillis()));
 
 		                long tiempoTrabajadoMillis = ultimoFichaje.getHorarioSalida().getTime() - ultimoFichaje.getHorarioEntrada().getTime();
@@ -213,9 +215,22 @@ public class Fichar extends JDialog {
 		panel_2.setLayout(null);
 		
 		JButton btManual = new JButton("FICHAR MANUAL");
+		btManual.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        ficharManualmente();
+		    }
+		});
 		btManual.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btManual.setBounds(354, 50, 150, 54);
 		panel_2.add(btManual);
+		
+		JLabel lblNewLabel_4 = new JLabel("(yyyy-MM-dd HH:mm:ss)");
+		lblNewLabel_4.setBounds(144, 36, 142, 13);
+		panel_2.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_4_1 = new JLabel("(yyyy-MM-dd HH:mm:ss)");
+		lblNewLabel_4_1.setBounds(144, 84, 142, 13);
+		panel_2.add(lblNewLabel_4_1);
 		
 		JButton btBuscar = new JButton("BUSCAR");
 		btBuscar.addActionListener(new ActionListener() {
@@ -269,16 +284,39 @@ public class Fichar extends JDialog {
             entradaRegistrada = true;
             JOptionPane.showMessageDialog(null, "Ya has registrado la entrada para hoy. Puedes fichar la salida.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else {
-            // Verificar si hay registros con entrada pero sin salida
-            ArrayList<Fichaje_DTO> fichajesSinSalida = fichajeDAO.obtenerFichajesSinSalida();
-            if (!fichajesSinSalida.isEmpty()) {
-                entradaRegistrada = true;
-            }
+            entradaRegistrada = false;
         }
     }
+
     
     public static LocalDate obtenerDiaActual() {
         return LocalDate.now();
+    }
+    private void ficharManualmente() {
+        String dniEmpleado = tfDni.getText();
+        String entradaStr = tfEntrada.getText();
+        String salidaStr = tfSalida.getText();
+
+        if (!entradaStr.isEmpty() && !salidaStr.isEmpty()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            LocalDateTime horarioEntrada = LocalDateTime.parse(entradaStr.trim(), formatter);
+            LocalDateTime horarioSalida = LocalDateTime.parse(salidaStr.trim(), formatter);
+
+            Fichaje_DTO fichajeEntrada = new Fichaje_DTO(dniEmpleado, Timestamp.valueOf(horarioEntrada), Timestamp.valueOf(horarioSalida), 0.0);
+
+            Fichaje_DAO fichajeDAO = new Fichaje_DAO();
+            if (fichajeDAO.insertar(fichajeEntrada)) {
+                JOptionPane.showMessageDialog(null, "Fichaje manual registrado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                tfEntrada.setText("");
+                tfSalida.setText("");
+                verificarEntradaRegistrada();  // Actualizar estado después de registrar manualmente
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al registrar el fichaje manual", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor, complete los campos de horario de entrada y salida", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 }
