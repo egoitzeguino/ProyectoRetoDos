@@ -132,9 +132,6 @@ public class InicioSesion extends JDialog {
                 String usuario = tfUsuario.getText();
                 String contrasena = tfContrasena.getText();
 
-                // Aquí debes agregar la lógica de autenticación.
-                // En este ejemplo, se utiliza un DAO para buscar al gerente en la base de datos.
-
                 Gerente_DAO gerenteDAO = new Gerente_DAO();
                 Gerente_DTO gerente = gerenteDAO.buscarPorUsuario(usuario);
 

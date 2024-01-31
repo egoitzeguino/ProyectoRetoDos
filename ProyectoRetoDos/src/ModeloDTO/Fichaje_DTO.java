@@ -1,22 +1,18 @@
 package ModeloDTO;
 
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Fichaje_DTO {
 
-    private String dni;
-    private Date horarioEntrada;
-    private Date horarioSalida;
+	private String dni;
+    private Timestamp horarioEntrada;
+    private Timestamp horarioSalida;
     private double totalHoras;
 
-    /**
-     * @param dni
-     * @param horarioEntrada
-     * @param horarioSalida
-     * @param totalHoras
-     */
-    public Fichaje_DTO(String dni, Date horarioEntrada, Date horarioSalida, double totalHoras) {
-        super();
+    public Fichaje_DTO(String dni, Timestamp horarioEntrada, Timestamp horarioSalida, double totalHoras) {
         this.dni = dni;
         this.horarioEntrada = horarioEntrada;
         this.horarioSalida = horarioSalida;
@@ -35,19 +31,19 @@ public class Fichaje_DTO {
         this.dni = dni;
     }
 
-    public Date getHorarioEntrada() {
+    public Timestamp getHorarioEntrada() {
         return horarioEntrada;
     }
 
-    public void setHorarioEntrada(Date horarioEntrada) {
+    public void setHorarioEntrada(Timestamp horarioEntrada) {
         this.horarioEntrada = horarioEntrada;
     }
 
-    public Date getHorarioSalida() {
+    public Timestamp getHorarioSalida() {
         return horarioSalida;
     }
 
-    public void setHorarioSalida(Date horarioSalida) {
+    public void setHorarioSalida(Timestamp horarioSalida) {
         this.horarioSalida = horarioSalida;
     }
 
