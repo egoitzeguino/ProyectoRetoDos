@@ -248,7 +248,7 @@ public class Fichaje_DAO implements Patron_DAO<Fichaje_DTO> {
         return null;
     }
 
-    private boolean existeFichajeEntradaParaHoy(String dni) {
+    public boolean existeFichajeEntradaParaHoy(String dni) {
 
         Fichaje_DAO fichajeDAO = new Fichaje_DAO();
         Fichaje_DTO fichajeExistente = fichajeDAO.obtenerFichajeEntradaParaHoy(dni);
