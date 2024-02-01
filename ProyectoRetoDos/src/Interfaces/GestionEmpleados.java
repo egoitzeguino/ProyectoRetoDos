@@ -93,8 +93,9 @@ public class GestionEmpleados extends JDialog {
 		JButton btnDetallesDeEmpleado = new JButton("DETALLES DE EMPLEADO");
 		btnDetallesDeEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EmpleadoDeterminado ed = new EmpleadoDeterminado();
-				ed.setVisible(true);
+				EmpleadoDeterminado empleadoDeterminado = new EmpleadoDeterminado(true);
+
+				empleadoDeterminado.setVisible(true);
 			}
 		});
 		btnDetallesDeEmpleado.setFont(new Font("Tahoma", Font.BOLD, 14));

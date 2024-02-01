@@ -13,12 +13,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import ModeloDAO.Empleado_DAO;
 import ModeloDTO.Empleado_DTO;
+
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -158,17 +161,31 @@ public class MostrarEmpleados extends JDialog {
         JButton btVolver = new JButton("VOLVER");
         btVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
         btVolver.addActionListener(e -> dispose());
-
+        
         JButton btDetalles = new JButton("VER DETALLES DE CLIENTE");
         btDetalles.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int selectedRow = table.getSelectedRow();
-                if (selectedRow != -1) {
-                    int dni = (int) table.getValueAt(selectedRow, 0);
-                    Empleado_DTO selectedEmpleado = empleadoDAO.buscar(dni);
-                    EmpleadoDeterminado empleadoDeterminado = new EmpleadoDeterminado();
-                    empleadoDeterminado.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                    empleadoDeterminado.setVisible(true);
+                int[] selectedRows = table.getSelectedRows();
+                if (selectedRows.length == 0) {
+                    JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún empleado.");
+                } else {
+                    for (int selectedRow : selectedRows) {
+                        
+                        String dni = (String) initialModel.getValueAt(selectedRow, 0);
+                        String nombre = (String) initialModel.getValueAt(selectedRow, 1);
+                        String apellido = (String) initialModel.getValueAt(selectedRow, 2);
+                        Date antiguedad = (Date) initialModel.getValueAt(selectedRow, 3);
+                        double salario = (double) initialModel.getValueAt(selectedRow, 4);
+                        int cantComandas = (int) initialModel.getValueAt(selectedRow, 5);
+                        int cantCocteles = (int) initialModel.getValueAt(selectedRow, 6);
+                        String tipo = (String) initialModel.getValueAt(selectedRow, 7);
+
+                        EmpleadoDeterminado empleadoDeterminado = new EmpleadoDeterminado(false);
+                        empleadoDeterminado.setDatosEmpleado(new Empleado_DTO(dni, nombre, apellido, antiguedad, salario, cantComandas, cantCocteles, tipo));
+
+                        empleadoDeterminado.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                        empleadoDeterminado.setVisible(true);
+                    }
                 }
             }
         });
