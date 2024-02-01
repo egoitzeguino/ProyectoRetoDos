@@ -182,7 +182,6 @@ public class Fichar extends JDialog {
 
 		        if (ultimoFichaje != null) {
 		            if (ultimoFichaje.getHorarioSalida() == null) {
-		                // Se verifica que haya un horario de entrada registrado
 		                Timestamp horarioEntrada = ultimoFichaje.getHorarioEntrada();
 		                if (horarioEntrada != null) {
 		                    ultimoFichaje.setHorarioSalida(new Timestamp(System.currentTimeMillis()));
