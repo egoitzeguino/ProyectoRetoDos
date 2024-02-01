@@ -58,18 +58,13 @@ public class GestionEmpleados extends JDialog {
 		btnEliminarEmpleado.setBounds(0, 275, 437, 48);
 		contentPanel.add(btnEliminarEmpleado);
 		
-		JButton btnDetallesEmpleado = new JButton("DETALLES EMPLEADO");
-		btnDetallesEmpleado.addActionListener(new ActionListener() {
+		JButton btnMostarEmpleado = new JButton("MOSTRAR TODOS LOS EMPLEADOS");
+		btnMostarEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ModificarEmpleado me = new ModificarEmpleado();
+				MostrarEmpleados me = new MostrarEmpleados();
 				me.setVisible(true);
 			}
 		});
-		btnDetallesEmpleado.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnDetallesEmpleado.setBounds(0, 362, 437, 48);
-		contentPanel.add(btnDetallesEmpleado);
-		
-		JButton btnMostarEmpleado = new JButton("MOSTRAR TODOS LOS EMPLEADOS");
 		btnMostarEmpleado.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnMostarEmpleado.setBounds(0, 407, 437, 48);
 		contentPanel.add(btnMostarEmpleado);
@@ -94,5 +89,16 @@ public class GestionEmpleados extends JDialog {
 		btModificarEmpleado.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btModificarEmpleado.setBounds(0, 316, 437, 48);
 		contentPanel.add(btModificarEmpleado);
+		
+		JButton btnDetallesDeEmpleado = new JButton("DETALLES DE EMPLEADO");
+		btnDetallesDeEmpleado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EmpleadoDeterminado ed = new EmpleadoDeterminado();
+				ed.setVisible(true);
+			}
+		});
+		btnDetallesDeEmpleado.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnDetallesDeEmpleado.setBounds(0, 361, 437, 48);
+		contentPanel.add(btnDetallesDeEmpleado);
 	}
 }

@@ -176,4 +176,51 @@ public class Empleado_DAO implements Patron_DAO<Empleado_DTO> {
         }
         return empleados;
     }
+    public ArrayList<Empleado_DTO> listarTodos2(String tipoEmpleado) {
+        ArrayList<Empleado_DTO> empleados = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String SQL_FIND_BY_TYPE = "SELECT * FROM empleado WHERE tipo_emp = ?";
+
+        try {
+            ps = con.getCon().prepareStatement(tipoEmpleado != null ? SQL_FIND_BY_TYPE : SQL_FINDALL);
+
+            // Set the parameter if tipoEmpleado is provided
+            if (tipoEmpleado != null) {
+                ps.setString(1, tipoEmpleado);
+            }
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Empleado_DTO empleado = new Empleado_DTO(
+                		rs.getString("dni"),
+                        rs.getString("nombre_emp"),
+                        rs.getString("apel_emp"),
+                        rs.getDate("antiguedad"),
+                        rs.getDouble("salario"),
+                        rs.getInt("cant_comandas"),
+                        rs.getInt("cant_cocteles"),
+                        rs.getString("tipo_emp")
+                );
+                empleados.add(empleado);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return empleados;
+    }
+
+    
 }
