@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InformeHorarioEmp" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a5c9b49-9dc5-422a-ac69-e92cf61ef530">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="TortugaJuanes"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="dni" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT 
+tortugajuanes.empleado.nombre_emp,
+ tortugajuanes.empleado.apel_emp,
+  tortugajuanes.empleado.antiguedad, 
+  tortugajuanes.empleado.salario, 
+  tortugajuanes.fichaje.horario_ent, 
+  tortugajuanes.fichaje.horario_sal, 
+  tortugajuanes.fichaje.total_horas, 
+  SUM(tortugajuanes.fichaje.total_horas) 
+  OVER (PARTITION BY tortugajuanes.empleado.dni) as total_horas_suma 
+  FROM 
+  tortugajuanes.empleado 
+  INNER JOIN tortugajuanes.fichaje ON tortugajuanes.empleado.dni = tortugajuanes.fichaje.dni 
+  WHERE 
+  tortugajuanes.empleado.dni =  $P{dni} ]]>
+	</queryString>
+	<field name="nombre_emp" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_emp"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_emp"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empleado"/>
+	</field>
+	<field name="apel_emp" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="apel_emp"/>
+		<property name="com.jaspersoft.studio.field.label" value="apel_emp"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empleado"/>
+	</field>
+	<field name="antiguedad" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="antiguedad"/>
+		<property name="com.jaspersoft.studio.field.label" value="antiguedad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empleado"/>
+	</field>
+	<field name="salario" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="salario"/>
+		<property name="com.jaspersoft.studio.field.label" value="salario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="empleado"/>
+	</field>
+	<field name="horario_ent" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="horario_ent"/>
+		<property name="com.jaspersoft.studio.field.label" value="horario_ent"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fichaje"/>
+	</field>
+	<field name="horario_sal" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="horario_sal"/>
+		<property name="com.jaspersoft.studio.field.label" value="horario_sal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fichaje"/>
+	</field>
+	<field name="total_horas" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total_horas"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_horas"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="fichaje"/>
+	</field>
+	<field name="total_horas_suma" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total_horas_suma"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_horas_suma"/>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{nombre_emp}]]></groupExpression>
+		<groupHeader>
+			<band height="27">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="3" width="721" height="24" forecolor="#B89F7D" backcolor="#000000" uuid="f24569ed-2518-465a-a480-0c195aacd180"/>
+					<textField textAdjust="StretchHeight">
+						<reportElement style="SubTitle" x="2" y="0" width="148" height="24" forecolor="#FFFFFF" uuid="5b7282d2-5169-4db4-b85a-e2391d4d4e66"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{nombre_emp}]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="StretchHeight">
+						<reportElement positionType="Float" x="149" y="-1" width="110" height="26" forecolor="#FFFFFF" uuid="c09ae599-41a3-4b19-8a1e-72af405a3627"/>
+						<textElement>
+							<font fontName="Times New Roman" size="18" isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{apel_emp}]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="StretchHeight">
+						<reportElement positionType="Float" x="280" y="0" width="130" height="26" forecolor="#FFFFFF" uuid="e5824731-9893-4741-bb99-2ee3c27bf354"/>
+						<textElement>
+							<font fontName="Times New Roman" size="18" isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{antiguedad}]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="StretchHeight">
+						<reportElement positionType="Float" x="430" y="0" width="115" height="26" forecolor="#FFFFFF" uuid="c0379178-b57b-4d74-9eea-97d4dc55a956"/>
+						<textElement>
+							<font fontName="Times New Roman" size="18" isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{salario}]]></textFieldExpression>
+					</textField>
+					<textField textAdjust="StretchHeight">
+						<reportElement style="SubTitle" x="377" y="-103" width="300" height="50" forecolor="#FFFFFF" uuid="f1b07cbb-1a77-491f-a094-05efe07d4e05"/>
+						<textElement>
+							<font size="36" isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{nombre_emp}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<rectangle>
+					<reportElement x="725" y="3" width="77" height="24" backcolor="#666666" uuid="70e1e931-2edd-4f3d-b09b-b9da04709f25"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[$F{apel_emp}]]></groupExpression>
+	</group>
+	<group name="antiguedad">
+		<groupExpression><![CDATA[$F{antiguedad}]]></groupExpression>
+	</group>
+	<group name="salario">
+		<groupExpression><![CDATA[$F{salario}]]></groupExpression>
+	</group>
+	<group name="Group3"/>
+	<group name="Group4"/>
+	<group name="Group5">
+		<groupHeader>
+			<band height="50">
+				<staticText>
+					<reportElement style="Column header" x="0" y="15" width="199" height="18" forecolor="#000000" uuid="d1f62b1f-ecaf-482a-8845-c2e7949130da">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c58427af-fee5-410e-82c0-a0aee7543241"/>
+					</reportElement>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[HORA ENTRADA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="199" y="15" width="199" height="18" forecolor="#000000" uuid="07f5b5eb-435f-4b31-8ac6-6ee5094fdd39">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6a9a2f5-fe76-4cd5-9f43-307bd5f5fdac"/>
+					</reportElement>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[HORA SALIDA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="398" y="15" width="199" height="18" forecolor="#000000" uuid="b8918964-1750-48b9-b549-ee33c60bc092">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b61c1ec7-ed35-4d5e-833a-30cdad0fcab8"/>
+					</reportElement>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[HORAS REALIZADAS]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Group6">
+		<groupFooter>
+			<band height="61">
+				<staticText>
+					<reportElement style="Column header" x="0" y="18" width="219" height="38" forecolor="#000000" uuid="e3f6b5e9-0580-45e5-8c40-5144f6951e70">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3d60b50e-63cf-440a-b0b6-9824e0523cdc"/>
+					</reportElement>
+					<textElement>
+						<font size="21" isBold="false"/>
+					</textElement>
+					<text><![CDATA[TOTAL HORAS]]></text>
+				</staticText>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="239" y="18" width="199" height="38" uuid="2522a463-14c7-45f8-bfe5-089780a57d29">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3d60b50e-63cf-440a-b0b6-9824e0523cdc"/>
+					</reportElement>
+					<textElement>
+						<font size="21"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{total_horas_suma} ]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<image>
+				<reportElement x="725" y="0" width="85" height="81" uuid="651ccc4b-e999-40fe-bcbf-1f25bcfc98af"/>
+				<imageExpression><![CDATA["C:/Users/e.eguino/Desktop/2EVAL/PROYECTOECLIPSE/ProyectoRetoDosGit/tortuga.png"]]></imageExpression>
+			</image>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="721" height="66" backcolor="#000000" uuid="d8d9e644-3a32-491d-97cb-a277aff17133"/>
+				<staticText>
+					<reportElement style="Title" x="6" y="0" width="643" height="66" uuid="27d8f6ee-f0a9-44f6-a160-1763c3b00f30"/>
+					<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+					<textElement verticalAlignment="Bottom">
+						<font size="36" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Informe del emplead@]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="70" width="721" height="32" forecolor="#000000" backcolor="#CC0000" uuid="b0c895f6-6dbd-477d-9858-9ad66af087e1"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="553" y="12" width="144" height="20" forecolor="#FFFFFF" uuid="a33fce3b-20c1-4696-873a-fe134d1e7d88"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="597" height="18" uuid="34a2ae4b-4055-476b-8676-d499f6af510b"/>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="199" height="18" uuid="aca1f1f6-c69b-4302-afa7-48a188ee7a1e">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c58427af-fee5-410e-82c0-a0aee7543241"/>
+					</reportElement>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{horario_ent}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="199" y="0" width="199" height="18" uuid="505d919d-e245-4bf6-a666-ceadecadf258">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6a9a2f5-fe76-4cd5-9f43-307bd5f5fdac"/>
+					</reportElement>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{horario_sal}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement style="Detail" positionType="Float" x="398" y="0" width="199" height="18" uuid="041d9e1c-4a4a-491c-ab64-0a9f6b93063c">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b61c1ec7-ed35-4d5e-833a-30cdad0fcab8"/>
+					</reportElement>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{total_horas}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="501ac6c4-e9d4-43cb-ba6b-7f2f44394cf3"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#000000" uuid="ffb10ec8-0371-4545-8eaa-96d62ad3cec0"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" uuid="b5521ea6-5f36-4864-856f-58d0bcd011f2"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="677" y="3" width="80" height="20" forecolor="#FFFFFF" uuid="e625ea3c-1741-4cfe-81cf-fbbdd00162c8"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="3" width="197" height="20" forecolor="#FFFFFF" uuid="0c9f7e91-d3f5-47f9-82b7-0b2b3a43a5d6"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

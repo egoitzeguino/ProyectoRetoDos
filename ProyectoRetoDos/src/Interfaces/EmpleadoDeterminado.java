@@ -7,8 +7,16 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Conexion.ConexionSGL;
 import ModeloDAO.Empleado_DAO;
 import ModeloDTO.Empleado_DTO;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
@@ -17,8 +25,12 @@ import java.awt.Image;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import java.awt.Toolkit;
@@ -159,6 +171,58 @@ public class EmpleadoDeterminado extends JDialog {
         contentPanel.add(btVolver);
 
         JButton btInforme = new JButton("INFORME DE EMPLEADO");
+        btInforme.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Component parentComponent = (Component) e.getSource();
+				Object[] options = {"Abrir", "Descargar", "Cancelar"};
+				int opcion = JOptionPane.showOptionDialog(
+				parentComponent,
+				"Seleccione una opción:",
+				"Opciones",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,
+				options,
+				options[0]);
+				if (opcion == JOptionPane.YES_OPTION) {
+					JasperPrint jasperPrintWindow = null;
+					try {
+						String dni = tfDni.getText();
+	                    Map <String, Object> parametros = new HashMap();
+	                    parametros.put ("dni", dni);
+						jasperPrintWindow = JasperFillManager.fillReport(
+								"src\\Informes\\InformeHorarioEmp.jasper",
+								parametros,ConexionSGL.getInstancia().getCon());
+					} catch (JRException e1) {
+						e1.printStackTrace();
+					}
+					JasperViewer jasperViewer = new JasperViewer(jasperPrintWindow,false);
+					jasperViewer.setVisible(true);
+				} else if (opcion == JOptionPane.NO_OPTION) {
+					JasperPrint jasperPrint = null;
+					try {
+						String dni = tfDni.getText();
+	                    Map <String, Object> parametros = new HashMap();
+	                    parametros.put ("dni", dni);
+						jasperPrint = JasperFillManager.fillReport(
+								"src\\Informes\\InformeHorarioEmp.jasper",
+								parametros,ConexionSGL.getInstancia().getCon());
+						JasperExportManager.exportReportToPdfFile(jasperPrint, "InformeHorarioEmp.pdf");
+						JOptionPane.showMessageDialog(
+								null,
+								"Informe descargado con éxito",
+								"Descarga exitosa",
+								JOptionPane.INFORMATION_MESSAGE);
+					} catch (JRException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else {
+					//No hace nada
+				}
+				
+			}
+		});
         btInforme.setFont(new Font("Tahoma", Font.BOLD, 12));
         btInforme.setBounds(124, 475, 199, 59);
         contentPanel.add(btInforme);
