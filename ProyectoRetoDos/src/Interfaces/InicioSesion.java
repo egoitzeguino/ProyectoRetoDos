@@ -11,6 +11,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import ModeloDAO.Gerente_DAO;
@@ -20,32 +21,37 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.SystemColor;
+import javax.swing.SwingConstants;
+import java.awt.Toolkit;
 
 public class InicioSesion extends JDialog {
 
     private static final long serialVersionUID = 1L;
     private final JPanel contentPanel = new JPanel();
     private JTextField tfUsuario;
-    private JTextField tfContrasena;
+    private JPasswordField tfContrasena;
 
     /**
      * Create the dialog.
      */
     public InicioSesion() {
+    	setTitle("Inicio de sesion");
+    	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
         setBounds(100, 100, 450, 586);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         getContentPane().add(contentPanel, BorderLayout.CENTER);
         contentPanel.setLayout(null);
 
-        contentPanel.setBackground(new Color(255, 228, 196));
+        contentPanel.setBackground(SystemColor.inactiveCaptionBorder);
 
         tfUsuario = new JTextField();
         tfUsuario.setFont(new Font("Arial", Font.PLAIN, 16));
         tfUsuario.setBounds(56, 249, 337, 55);
-        tfUsuario.setText("Usuario"); 
         tfUsuario.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        tfUsuario.setHorizontalAlignment(JTextField.CENTER);
+        tfUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+        tfUsuario.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         contentPanel.add(tfUsuario);
         tfUsuario.setColumns(10);
         tfUsuario.addFocusListener(new FocusListener() {
@@ -64,14 +70,15 @@ public class InicioSesion extends JDialog {
             }
         });
 
-        tfContrasena = new JTextField();
+        tfContrasena = new JPasswordField();
         tfContrasena.setFont(new Font("Arial", Font.PLAIN, 16));
         tfContrasena.setBounds(56, 333, 337, 55);
-        tfContrasena.setText("Contraseña"); 
         tfContrasena.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        tfContrasena.setHorizontalAlignment(JTextField.CENTER);
+        tfContrasena.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        tfContrasena.setHorizontalAlignment(SwingConstants.LEFT);
         contentPanel.add(tfContrasena);
         tfContrasena.setColumns(10);
+        
 
         tfContrasena.addFocusListener(new FocusListener() {
             @Override
@@ -88,7 +95,8 @@ public class InicioSesion extends JDialog {
                 }
             }
         });
-
+        tfContrasena.setEchoChar('*');
+        
         JLabel lblNewLabel_2 = new JLabel("INICIO DE SESION");
         lblNewLabel_2.setHorizontalAlignment(JLabel.CENTER);
         lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 24));
@@ -113,9 +121,9 @@ public class InicioSesion extends JDialog {
         contentPanel.add(lblContrasea);
 
         JLabel lblImagen = new JLabel();
-        lblImagen.setBounds(138, 61, 156, 139);
+        lblImagen.setBounds(139, 77, 156, 139);
 
-        ImageIcon imagenIcon = new ImageIcon("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDos\\markel1.jpg");
+        ImageIcon imagenIcon = new ImageIcon("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg");
         Image imagenOriginal = imagenIcon.getImage();
 
         int ancho = lblImagen.getWidth();
@@ -137,6 +145,8 @@ public class InicioSesion extends JDialog {
 
                 if (gerente != null && gerente.getContrasena().equals(contrasena)) {
                     JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso");
+                    tfUsuario.setText("");
+                    tfContrasena.setText("");
                     GestionEmpleados ge = new GestionEmpleados();
                     ge.setVisible(true);
                 } else {
@@ -149,9 +159,11 @@ public class InicioSesion extends JDialog {
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
-        buttonPane.setBackground(new Color(255, 228, 196));
+        buttonPane.setBackground(SystemColor.inactiveCaptionBorder);
 
         JButton btVolver = new JButton("VOLVER");
+        stylizeButton(btVolver);
+		btVolver.setBackground(new Color(70, 130, 180));
         btVolver.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		dispose();
@@ -161,4 +173,10 @@ public class InicioSesion extends JDialog {
         btVolver.setActionCommand("Cancel");
         buttonPane.add(btVolver);
     }
+    private void stylizeButton(JButton button) {
+		button.setFont(new Font("Arial", Font.BOLD, 16)); 
+		button.setBackground(new Color(30, 144, 255));
+		button.setForeground(Color.WHITE);
+		button.setFocusPainted(false); 
+	}
 }

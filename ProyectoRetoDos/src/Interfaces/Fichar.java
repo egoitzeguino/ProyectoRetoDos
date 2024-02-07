@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,11 +28,12 @@ import ModeloDAO.Empleado_DAO;
 import ModeloDAO.Fichaje_DAO;
 import ModeloDTO.Empleado_DTO;
 import ModeloDTO.Fichaje_DTO;
+import java.awt.Toolkit;
 
 public class Fichar extends JDialog {
 
     private static final long serialVersionUID = 1L;
-    private final JPanel contentPanel = new JPanel();
+    private JPanel contentPanel = new JPanel();
     private JTextField tfDni;
     private JTextField tfEntrada;
     private JTextField tfSalida;
@@ -44,16 +46,28 @@ public class Fichar extends JDialog {
      * Create the dialog.
      */
     public Fichar() {
+    	setTitle("Fichar Horario");
+    	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
     	
     	setBounds(100, 100, 772, 702);
         getContentPane().setLayout(new BorderLayout());
-        contentPanel.setBackground(Color.WHITE); 
+        contentPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon backgroundImage = new ImageIcon("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\fondofichar.jpg");
+                Image img = backgroundImage.getImage();
+                g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+            }
+        };
+
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        getContentPane().add(contentPanel, BorderLayout.CENTER);
+        setContentPane(contentPanel);
         contentPanel.setLayout(null);
 
         JLabel lbTitulo = new JLabel("¡BIENVENID@ EMPLEAD@!");
-        lbTitulo.setBackground(new Color(173, 216, 230)); 
+        lbTitulo.setForeground(new Color(255, 255, 255));
+        lbTitulo.setBackground(new Color(0, 0, 0)); 
         lbTitulo.setOpaque(true); 
 
         lbTitulo.setHorizontalAlignment(JLabel.CENTER);
@@ -63,16 +77,16 @@ public class Fichar extends JDialog {
 
         JLabel lblNewLabel = new JLabel("INTRODUCE DNI:");
         lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        lblNewLabel.setBounds(86, 122, 150, 25);
+        lblNewLabel.setBounds(174, 123, 150, 25);
         contentPanel.add(lblNewLabel);
 
         tfDni = new JTextField();
-        tfDni.setBounds(246, 122, 150, 25);
+        tfDni.setBounds(334, 123, 150, 25);
         contentPanel.add(tfDni);
         tfDni.setColumns(10);
 		
 		JLabel lbManual = new JLabel("SI HA ENTRADO A OTRA HORA INTRODUZCA MANUALMENTE ");
-		lbManual.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lbManual.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lbManual.setBounds(94, 455, 510, 13);
 		contentPanel.add(lbManual);
 		
@@ -130,6 +144,7 @@ public class Fichar extends JDialog {
 		tfTipo.setColumns(10);
 		
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(204, 255, 204));
 		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel_1.setBounds(86, 289, 569, 141);
 		contentPanel.add(panel_1);
@@ -138,7 +153,7 @@ public class Fichar extends JDialog {
 		JLabel lbFichar = new JLabel("SI HA ENTRADO AHORA PULSE FICHAR");
 		lbFichar.setBounds(26, 25, 258, 13);
 		panel_1.add(lbFichar);
-		lbFichar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lbFichar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
 		JButton btFichar = new JButton("FICHAR ENTRADA");
 		btFichar.addActionListener(new ActionListener() {
@@ -171,7 +186,7 @@ public class Fichar extends JDialog {
 		JLabel lblSiSaleAhora = new JLabel("SI SALE AHORA PULSE FICHAR");
 		lblSiSaleAhora.setBounds(341, 25, 258, 13);
 		panel_1.add(lblSiSaleAhora);
-		lblSiSaleAhora.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblSiSaleAhora.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
 		JButton btSalida = new JButton("FICHAR SALIDA");
 		btSalida.addActionListener(new ActionListener() {
@@ -215,6 +230,7 @@ public class Fichar extends JDialog {
 		btSalida.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		JPanel panel_2 = new JPanel();
+		panel_2.setBackground(new Color(102, 255, 102));
 		panel_2.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel_2.setBounds(86, 440, 569, 141);
 		contentPanel.add(panel_2);
@@ -236,7 +252,7 @@ public class Fichar extends JDialog {
 		            Timestamp horarioEntrada = new Timestamp(entradaDate.getTime());
 		            Timestamp horarioSalida = new Timestamp(salidaDate.getTime());
 
-		            // Calcula la diferencia entre la salida y entrada para obtener las horas trabajadas
+
 		            long tiempoTrabajadoMillis = horarioSalida.getTime() - horarioEntrada.getTime();
 		            double horasTrabajadas = tiempoTrabajadoMillis / (1000.0 * 60.0 * 60.0);
 
@@ -292,25 +308,18 @@ public class Fichar extends JDialog {
             }
 		});
 		btBuscar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btBuscar.setBounds(406, 123, 110, 23);
+		btBuscar.setBounds(494, 124, 110, 23);
 		contentPanel.add(btBuscar);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setBackground(new Color(255, 255, 255));
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton btVolver = new JButton("VOLVER");
-				btVolver.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose();
-					}
-				});
-				btVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
-				btVolver.setActionCommand("Cancel");
-				buttonPane.add(btVolver);
+		
+		JButton btVolver = new JButton("VOLVER");
+		btVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
-		}
+		});
+		btVolver.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btVolver.setBounds(663, 634, 85, 21);
+		contentPanel.add(btVolver);
 
 	}
     private void verificarEntradaRegistrada(String dniEmpleado) {
@@ -321,12 +330,11 @@ public class Fichar extends JDialog {
             entradaRegistrada = true;
             JOptionPane.showMessageDialog(null, "Ya has registrado la entrada para hoy. Puedes fichar la salida.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else {
-            // Verificar si hay registros con entrada pero sin salida
             ArrayList<Fichaje_DTO> fichajesSinSalida = fichajeDAO.obtenerFichajesSinSalida();
             if (!fichajesSinSalida.isEmpty()) {
                 entradaRegistrada = true;
             } else {
-                entradaRegistrada = false; // Importante reiniciar el valor si no hay registros sin salida
+                entradaRegistrada = false;
             }
         }
     }

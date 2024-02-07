@@ -19,6 +19,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -29,11 +31,13 @@ import java.util.Map;
 import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class MostrarEmpleados extends JDialog {
 
     private static final long serialVersionUID = 1L;
-    private final JPanel contentPanel = new JPanel();
+    private JPanel contentPanel = new JPanel();
     private JTable table;
     private DefaultTableModel initialModel;
     private JComboBox cbOrdenar, cbTipo;
@@ -44,13 +48,25 @@ public class MostrarEmpleados extends JDialog {
      * Create the dialog.
      */
     public MostrarEmpleados() {
+    	setTitle("Listado de empleados");
+    	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
         setModal(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
-        setBounds(100, 100, 889, 600);
-        getContentPane().setLayout(new BorderLayout());
+        setBounds(100, 100, 889, 575);
+        contentPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon backgroundImage = new ImageIcon("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\fondomadera.jpg");
+                Image img = backgroundImage.getImage();
+                g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+            }
+        };
+
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        getContentPane().add(contentPanel, BorderLayout.CENTER);
+        setContentPane(contentPanel);
+        contentPanel.setLayout(null);
 
         DefaultComboBoxModel<String> cbModel = new DefaultComboBoxModel<>();
 
@@ -84,7 +100,7 @@ public class MostrarEmpleados extends JDialog {
         table = new JTable(initialModel);
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10, 120, 855, 402);
+        scrollPane.setBounds(10, 120, 855, 374);
         contentPanel.add(scrollPane);
 
         JLabel lblNewLabel = new JLabel("LISTADO GENERAL DE EMPLEADOS");
@@ -113,9 +129,11 @@ public class MostrarEmpleados extends JDialog {
                 ordenarArticulos();
             }
         });
+        
 
         JButton btMostrar = new JButton("Mostrar Todos");
         btMostrar.setBounds(10, 77, 132, 33);
+        stylizeButton(btMostrar);
         contentPanel.add(btMostrar);
         btMostrar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
@@ -146,23 +164,11 @@ public class MostrarEmpleados extends JDialog {
         lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
         lblNewLabel_2.setBounds(643, 76, 106, 33);
         contentPanel.add(lblNewLabel_2);
-
-        btMostrar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                empleados = empleadoDAO.listarTodos();
-                actualizarTabla();
-            }
-        });
-
-        JPanel buttonPane = new JPanel();
-        buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        getContentPane().add(buttonPane, BorderLayout.SOUTH);
-
-        JButton btVolver = new JButton("VOLVER");
-        btVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
-        btVolver.addActionListener(e -> dispose());
         
-        JButton btDetalles = new JButton("VER DETALLES DE CLIENTE");
+        JButton btDetalles = new JButton("VER DETALLES DE EMPLEADO");
+        btDetalles.setBounds(468, 504, 248, 25);
+        stylizeButton(btDetalles);
+        contentPanel.add(btDetalles);
         btDetalles.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int[] selectedRows = table.getSelectedRows();
@@ -189,9 +195,22 @@ public class MostrarEmpleados extends JDialog {
                 }
             }
         });
-        btDetalles.setFont(new Font("Tahoma", Font.PLAIN, 13));
-        buttonPane.add(btDetalles);
-        buttonPane.add(btVolver);
+        btDetalles.setFont(new Font("Tahoma", Font.BOLD, 13));
+        
+                JButton btVolver = new JButton("VOLVER");
+                btVolver.setBounds(759, 504, 106, 25);
+                stylizeButton(btVolver);
+        		btVolver.setBackground(new Color(70, 130, 180));
+                contentPanel.add(btVolver);
+                btVolver.setFont(new Font("Tahoma", Font.PLAIN, 13));
+                btVolver.addActionListener(e -> dispose());
+
+        btMostrar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                empleados = empleadoDAO.listarTodos();
+                actualizarTabla();
+            }
+        });
     }
 
     private void ordenarArticulos() {
@@ -246,4 +265,10 @@ public class MostrarEmpleados extends JDialog {
             initialModel.addRow(fila);
         }
     }
+    private void stylizeButton(JButton button) {
+		button.setFont(new Font("Arial", Font.BOLD, 16)); 
+		button.setBackground(new Color(30, 144, 255));
+		button.setForeground(Color.WHITE);
+		button.setFocusPainted(false); 
+	}
 }

@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Toolkit;
 
 public class PantallaInicio extends JFrame {
 
@@ -38,6 +39,8 @@ public class PantallaInicio extends JFrame {
     }
 
     public PantallaInicio() {
+    	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
+    	setTitle("Tortuga Juanes");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 308);
         contentPane = new JPanel() {

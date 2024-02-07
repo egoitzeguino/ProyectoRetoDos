@@ -1,6 +1,8 @@
 package Interfaces;
 
 import java.awt.BorderLayout;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -10,14 +12,21 @@ import ModeloDTO.Empleado_DTO;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import java.awt.Toolkit;
 
 public class EmpleadoDeterminado extends JDialog {
 
     private static final long serialVersionUID = 1L;
-    private final JPanel contentPanel = new JPanel();
+    private JPanel contentPanel = new JPanel();
     private JTextField tfDni;
     private JTextField tfNombre;
     private JTextField tfApellido;
@@ -31,119 +40,128 @@ public class EmpleadoDeterminado extends JDialog {
      * Create the dialog.
      */
     public EmpleadoDeterminado(boolean dniEditable) {
+    	setTitle("Detalle de empleado");
+    	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
         setModal(true);
-        setBounds(100, 100, 450, 445);
+        setBounds(100, 100, 450, 615);
         getContentPane().setLayout(new BorderLayout());
+        contentPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon backgroundImage = new ImageIcon("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\fondomadera.jpg");
+                Image img = backgroundImage.getImage();
+                g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+            }
+        };
+
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        getContentPane().add(contentPanel, BorderLayout.CENTER);
+        setContentPane(contentPanel);
         contentPanel.setLayout(null);
 
         JLabel lbDni = new JLabel("DNI:");
         lbDni.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lbDni.setBounds(10, 48, 120, 13);
+        lbDni.setBounds(74, 75, 120, 13);
         contentPanel.add(lbDni);
 
         tfDni = new JTextField();
         tfDni.setEditable(dniEditable);  // Establecer editable según el valor proporcionado
         tfDni.setColumns(10);
-        tfDni.setBounds(125, 46, 96, 19);
+        tfDni.setBounds(189, 73, 96, 19);
         contentPanel.add(tfDni);
 
         JLabel lblNombre = new JLabel("NOMBRE:");
         lblNombre.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblNombre.setBounds(10, 88, 120, 13);
+        lblNombre.setBounds(74, 155, 120, 13);
         contentPanel.add(lblNombre);
 
         tfNombre = new JTextField();
         tfNombre.setEditable(false);
         tfNombre.setColumns(10);
-        tfNombre.setBounds(125, 86, 180, 19);
+        tfNombre.setBounds(189, 153, 180, 19);
         contentPanel.add(tfNombre);
 
         JLabel lbApel = new JLabel("APELLIDO:");
         lbApel.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lbApel.setBounds(10, 134, 120, 13);
+        lbApel.setBounds(74, 201, 120, 13);
         contentPanel.add(lbApel);
 
         tfApellido = new JTextField();
         tfApellido.setEditable(false);
         tfApellido.setColumns(10);
-        tfApellido.setBounds(125, 132, 180, 19);
+        tfApellido.setBounds(189, 199, 180, 19);
         contentPanel.add(tfApellido);
 
         JLabel lbAntigu = new JLabel("ANTIGUEDAD:");
         lbAntigu.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lbAntigu.setBounds(10, 180, 120, 13);
+        lbAntigu.setBounds(74, 247, 120, 13);
         contentPanel.add(lbAntigu);
 
         tfAntiguedad = new JTextField();
         tfAntiguedad.setEditable(false);
         tfAntiguedad.setColumns(10);
-        tfAntiguedad.setBounds(125, 178, 134, 19);
+        tfAntiguedad.setBounds(189, 245, 134, 19);
         contentPanel.add(tfAntiguedad);
 
         JLabel lbSal = new JLabel("SALARIO:");
         lbSal.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lbSal.setBounds(10, 228, 120, 13);
+        lbSal.setBounds(74, 295, 120, 13);
         contentPanel.add(lbSal);
 
         tfSalario = new JTextField();
         tfSalario.setEditable(false);
         tfSalario.setColumns(10);
-        tfSalario.setBounds(125, 226, 96, 19);
+        tfSalario.setBounds(189, 293, 96, 19);
         contentPanel.add(tfSalario);
 
         JLabel lbCantCom = new JLabel("CANT COMANDAS:");
         lbCantCom.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lbCantCom.setBounds(10, 276, 120, 13);
+        lbCantCom.setBounds(74, 343, 120, 13);
         contentPanel.add(lbCantCom);
 
         tfCantCom = new JTextField();
         tfCantCom.setEditable(false);
         tfCantCom.setColumns(10);
-        tfCantCom.setBounds(125, 274, 96, 19);
+        tfCantCom.setBounds(189, 341, 96, 19);
         contentPanel.add(tfCantCom);
 
         JLabel lbCantCoc = new JLabel("CANT COCTELES:");
         lbCantCoc.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lbCantCoc.setBounds(10, 318, 120, 13);
+        lbCantCoc.setBounds(74, 385, 120, 13);
         contentPanel.add(lbCantCoc);
 
         tfCantCoc = new JTextField();
         tfCantCoc.setEditable(false);
         tfCantCoc.setColumns(10);
-        tfCantCoc.setBounds(125, 316, 96, 19);
+        tfCantCoc.setBounds(189, 383, 96, 19);
         contentPanel.add(tfCantCoc);
 
         JLabel lblTipo = new JLabel("TIPO:");
         lblTipo.setFont(new Font("Dialog", Font.PLAIN, 12));
-        lblTipo.setBounds(10, 358, 120, 13);
+        lblTipo.setBounds(74, 425, 120, 13);
         contentPanel.add(lblTipo);
 
         tfTipo = new JTextField();
         tfTipo.setEditable(false);
         tfTipo.setColumns(10);
-        tfTipo.setBounds(125, 356, 96, 19);
+        tfTipo.setBounds(189, 423, 96, 19);
         contentPanel.add(tfTipo);
 
         JButton btVolver = new JButton("VOLVER");
+        stylizeButton(btVolver);
+		btVolver.setBackground(new Color(70, 130, 180));
         btVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
             }
         });
-        btVolver.setBounds(321, 377, 85, 21);
+        btVolver.setBounds(341, 547, 85, 21);
         contentPanel.add(btVolver);
 
         JButton btInforme = new JButton("INFORME DE EMPLEADO");
-        btInforme.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        btInforme.setBounds(246, 272, 180, 59);
+        btInforme.setFont(new Font("Tahoma", Font.BOLD, 12));
+        btInforme.setBounds(124, 475, 199, 59);
         contentPanel.add(btInforme);
-
-        JLabel lblNewLabel = new JLabel("DETALLE DE EMPLEADO");
-        lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-        lblNewLabel.setBounds(98, 10, 242, 26);
-        contentPanel.add(lblNewLabel);
 
         JButton btBuscar = new JButton("Buscar");
         btBuscar.addActionListener(new ActionListener() {
@@ -171,8 +189,29 @@ public class EmpleadoDeterminado extends JDialog {
                 }
             }
         });
-        btBuscar.setBounds(236, 377, 85, 21);
+        btBuscar.setBounds(295, 72, 85, 21);
         contentPanel.add(btBuscar);
+        
+        JLabel lblNewLabel_11 = new JLabel("DETALLE DE EMPLEADO");
+        lblNewLabel_11.setOpaque(true);
+        lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
+        lblNewLabel_11.setForeground(Color.WHITE);
+        lblNewLabel_11.setFont(new Font("Tahoma", Font.BOLD, 20));
+        lblNewLabel_11.setBackground(Color.BLACK);
+        lblNewLabel_11.setBounds(0, 0, 436, 45);
+        contentPanel.add(lblNewLabel_11);
+        
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(255, 255, 255));
+        panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        panel.setBounds(50, 55, 358, 59);
+        contentPanel.add(panel);
+        
+        JPanel panel_1 = new JPanel();
+        panel_1.setBackground(new Color(135, 206, 250));
+        panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        panel_1.setBounds(49, 130, 359, 334);
+        contentPanel.add(panel_1);
     }
 
     public void setDatosEmpleado(Empleado_DTO empleado) {
@@ -185,4 +224,10 @@ public class EmpleadoDeterminado extends JDialog {
         tfCantCoc.setText(String.valueOf(empleado.getCantCocteles()));
         tfTipo.setText(empleado.getTipoEmpleado());
     }
+    private void stylizeButton(JButton button) {
+		button.setFont(new Font("Arial", Font.BOLD, 12)); 
+		button.setBackground(new Color(30, 144, 255));
+		button.setForeground(Color.WHITE);
+		button.setFocusPainted(false); 
+	}
 }

@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -19,16 +20,21 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.awt.event.ActionEvent;
+import javax.swing.border.BevelBorder;
+import java.awt.Toolkit;
 
 public class ModificarEmpleado extends JDialog {
 
 	private static final long serialVersionUID = 1L;
-	private final JPanel contentPanel = new JPanel();
+	private JPanel contentPanel = new JPanel();
 	private JTextField tfDni;
 	private JTextField tfNombre;
 	private JTextField tfApellido;
@@ -44,53 +50,65 @@ public class ModificarEmpleado extends JDialog {
 	 * Create the dialog.
 	 */
 	public ModificarEmpleado() {
+		setTitle("Modificar empleado");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
 		setModal(true);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setBounds(100, 100, 531, 542);
+		setBounds(100, 100, 531, 599);
 		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
+		contentPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon backgroundImage = new ImageIcon("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\fondoazul.jpg");
+                Image img = backgroundImage.getImage();
+                g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+            }
+        };
+
+        contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPanel);
+        contentPanel.setLayout(null);
 		
 		JLabel lbDni = new JLabel("DNI:");
 		lbDni.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lbDni.setBounds(10, 86, 120, 13);
+		lbDni.setBounds(158, 104, 39, 13);
 		contentPanel.add(lbDni);
 		
 		JLabel lblNombre = new JLabel("NOMBRE:");
 		lblNombre.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblNombre.setBounds(10, 126, 120, 13);
+		lblNombre.setBounds(143, 154, 120, 13);
 		contentPanel.add(lblNombre);
 		
 		JLabel lblApellido = new JLabel("APELLIDO:");
 		lblApellido.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lblApellido.setBounds(10, 172, 120, 13);
+		lblApellido.setBounds(143, 200, 120, 13);
 		contentPanel.add(lblApellido);
 		
 		JLabel lbAntiguedad = new JLabel("ANTIGUEDAD:");
 		lbAntiguedad.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lbAntiguedad.setBounds(10, 218, 120, 13);
+		lbAntiguedad.setBounds(143, 246, 120, 13);
 		contentPanel.add(lbAntiguedad);
 		
 		JLabel lbSalario = new JLabel("SALARIO:");
 		lbSalario.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lbSalario.setBounds(10, 266, 120, 13);
+		lbSalario.setBounds(143, 294, 120, 13);
 		contentPanel.add(lbSalario);
 		
 		JLabel lbCantComandas = new JLabel("CANT COMANDAS:");
 		lbCantComandas.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lbCantComandas.setBounds(10, 314, 120, 13);
+		lbCantComandas.setBounds(143, 342, 120, 13);
 		contentPanel.add(lbCantComandas);
 		
 		JLabel lbCantCocteles = new JLabel("CANT COCTELES:");
 		lbCantCocteles.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lbCantCocteles.setBounds(10, 356, 120, 13);
+		lbCantCocteles.setBounds(143, 384, 120, 13);
 		contentPanel.add(lbCantCocteles);
 		
 		JLabel lbTipo = new JLabel("TIPO:");
 		lbTipo.setFont(new Font("Dialog", Font.PLAIN, 12));
-		lbTipo.setBounds(10, 407, 120, 13);
+		lbTipo.setBounds(143, 435, 120, 13);
 		contentPanel.add(lbTipo);
 		
 		JLabel lblNewLabel_11 = new JLabel("MODIFICACION DE EMPLEADO");
@@ -104,43 +122,43 @@ public class ModificarEmpleado extends JDialog {
 		contentPanel.add(lblNewLabel_11);
 		
 		tfDni = new JTextField();
-		tfDni.setBounds(125, 84, 46, 19);
+		tfDni.setBounds(201, 102, 114, 19);
 		contentPanel.add(tfDni);
 		tfDni.setColumns(10);
 		
 		tfNombre = new JTextField();
 		tfNombre.setColumns(10);
-		tfNombre.setBounds(125, 124, 134, 19);
+		tfNombre.setBounds(258, 152, 134, 19);
 		contentPanel.add(tfNombre);
 		
 		tfApellido = new JTextField();
 		tfApellido.setColumns(10);
-		tfApellido.setBounds(125, 170, 131, 19);
+		tfApellido.setBounds(258, 198, 131, 19);
 		contentPanel.add(tfApellido);
 		
 		tfAntiguedad = new JTextField();
 		tfAntiguedad.setColumns(10);
-		tfAntiguedad.setBounds(125, 216, 134, 19);
+		tfAntiguedad.setBounds(258, 244, 134, 19);
 		contentPanel.add(tfAntiguedad);
 		
 		tfSalario = new JTextField();
 		tfSalario.setColumns(10);
-		tfSalario.setBounds(125, 264, 96, 19);
+		tfSalario.setBounds(258, 292, 96, 19);
 		contentPanel.add(tfSalario);
 		
 		tfCantCom = new JTextField();
 		tfCantCom.setColumns(10);
-		tfCantCom.setBounds(125, 312, 96, 19);
+		tfCantCom.setBounds(258, 340, 96, 19);
 		contentPanel.add(tfCantCom);
 		
 		tfCantCoc = new JTextField();
 		tfCantCoc.setColumns(10);
-		tfCantCoc.setBounds(125, 354, 263, 19);
+		tfCantCoc.setBounds(258, 382, 96, 19);
 		contentPanel.add(tfCantCoc);
 		
 		tfTipo = new JTextField();
 		tfTipo.setColumns(10);
-		tfTipo.setBounds(125, 405, 263, 19);
+		tfTipo.setBounds(258, 433, 134, 19);
 		contentPanel.add(tfTipo);
 		
 		JButton btModificar = new JButton("MODIFICAR CLIENTE");
@@ -187,7 +205,7 @@ public class ModificarEmpleado extends JDialog {
 		    }
 		});
 		btModificar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btModificar.setBounds(162, 418, 189, 52);
+		btModificar.setBounds(169, 480, 209, 52);
 		contentPanel.add(btModificar);
 		
 		
@@ -196,52 +214,69 @@ public class ModificarEmpleado extends JDialog {
 		lblNewLabel_12.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_12.setBounds(0, 61, 517, 13);
 		contentPanel.add(lblNewLabel_12);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			
-			JButton btBuscar = new JButton("Buscar");
-			btBuscar.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e) {
-			        if (tfDni.getText().isEmpty()) {
-			            JOptionPane.showMessageDialog(null, "Por favor, introduce un DNI antes de buscar", "Campo vacío", JOptionPane.WARNING_MESSAGE);
-			            return;
-			        }
+		
+		JButton btBuscar = new JButton("Buscar");
+		btBuscar.setBounds(325, 99, 82, 23);
+		contentPanel.add(btBuscar);
+		btBuscar.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        if (tfDni.getText().isEmpty()) {
+		            JOptionPane.showMessageDialog(null, "Por favor, introduce un DNI antes de buscar", "Campo vacío", JOptionPane.WARNING_MESSAGE);
+		            return;
+		        }
 
-			        String dni = tfDni.getText();
+		        String dni = tfDni.getText();
 
-			        Empleado_DAO empleadoDAO = new Empleado_DAO();
-			        Empleado_DTO empleado = empleadoDAO.buscar(dni);
+		        Empleado_DAO empleadoDAO = new Empleado_DAO();
+		        Empleado_DTO empleado = empleadoDAO.buscar(dni);
 
-			        if (empleado != null) {
-			            tfNombre.setText(empleado.getNombre());
-			            tfApellido.setText(empleado.getApellido());
-			            tfAntiguedad.setText(String.valueOf(empleado.getAntiguedad()));
-			            tfSalario.setText(String.valueOf(empleado.getSalario()));
-			            tfCantCom.setText(String.valueOf(empleado.getCantComandas()));
-			            tfCantCoc.setText(String.valueOf(empleado.getCantCocteles()));
-			            tfTipo.setText(empleado.getTipoEmpleado());
-			        } else {
-			            JOptionPane.showMessageDialog(null, "Empleado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
-			        }
-			    }
-			});
-
-
-			btBuscar.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			buttonPane.add(btBuscar);
-			{
-				JButton btSalir = new JButton("Salir");
-				btSalir.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						dispose();
+		        if (empleado != null) {
+		            tfNombre.setText(empleado.getNombre());
+		            tfApellido.setText(empleado.getApellido());
+		            tfAntiguedad.setText(String.valueOf(empleado.getAntiguedad()));
+		            tfSalario.setText(String.valueOf(empleado.getSalario()));
+		            tfCantCom.setText(String.valueOf(empleado.getCantComandas()));
+		            tfCantCoc.setText(String.valueOf(empleado.getCantCocteles()));
+		            tfTipo.setText(empleado.getTipoEmpleado());
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Empleado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+		        }
+		    }
+		});
+		
+		
+					btBuscar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+					{
+						JButton btSalir = new JButton("SALIR");
+						btSalir.setBounds(435, 529, 72, 23);
+						stylizeButton(btSalir);
+						btSalir.setBackground(new Color(70, 130, 180));
+						contentPanel.add(btSalir);
+						btSalir.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								dispose();
+							}
+						});
+						btSalir.setFont(new Font("Tahoma", Font.PLAIN, 12));
+						btSalir.setActionCommand("Cancel");
 					}
-				});
-				btSalir.setFont(new Font("Tahoma", Font.PLAIN, 12));
-				btSalir.setActionCommand("Cancel");
-				buttonPane.add(btSalir);
-			}
-		}
+					
+					JPanel paneldni = new JPanel();
+					paneldni.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+					paneldni.setBounds(118, 84, 310, 52);
+					paneldni.setBackground(new Color(135, 206, 250));
+					contentPanel.add(paneldni);
+					
+					JPanel panelEmp = new JPanel();
+					panelEmp.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+					panelEmp.setBounds(88, 140, 375, 329);
+					panelEmp.setBackground(new Color(135, 206, 250));
+					contentPanel.add(panelEmp);
+	}
+	private void stylizeButton(JButton button) {
+		button.setFont(new Font("Arial", Font.BOLD, 16)); 
+		button.setBackground(new Color(30, 144, 255));
+		button.setForeground(Color.WHITE);
+		button.setFocusPainted(false); 
 	}
 }
