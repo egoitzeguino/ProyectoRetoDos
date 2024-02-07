@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -42,7 +43,8 @@ public class ModificarEmpleado extends JDialog {
 	private JTextField tfSalario;
 	private JTextField tfCantCom;
 	private JTextField tfCantCoc;
-	private JTextField tfTipo;
+	private JComboBox<String> cbTipo;
+	private boolean dniEncontrado = false;
 
 
 
@@ -54,8 +56,9 @@ public class ModificarEmpleado extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
 		setModal(true);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setLocationRelativeTo(null);
 		setBounds(100, 100, 531, 599);
+		setLocationRelativeTo(null);
+		dniEncontrado = false;
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel = new JPanel() {
             @Override
@@ -156,17 +159,16 @@ public class ModificarEmpleado extends JDialog {
 		tfCantCoc.setBounds(258, 382, 96, 19);
 		contentPanel.add(tfCantCoc);
 		
-		tfTipo = new JTextField();
-		tfTipo.setColumns(10);
-		tfTipo.setBounds(258, 433, 134, 19);
-		contentPanel.add(tfTipo);
+		cbTipo = new JComboBox<>(new String[]{"Camarero", "Cocinero", "Coctelero", "Gerente"});
+        cbTipo.setBounds(258, 433, 134, 19);
+        contentPanel.add(cbTipo);
 		
 		JButton btModificar = new JButton("MODIFICAR CLIENTE");
 		btModificar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	if (tfDni.getText().isEmpty() || tfNombre.getText().isEmpty() || tfApellido.getText().isEmpty()
 		                || tfSalario.getText().isEmpty() || tfAntiguedad.getText().isEmpty() || tfCantCom.getText().isEmpty()
-		                || tfCantCoc.getText().isEmpty() || tfTipo.getText().isEmpty()) {
+		                || tfCantCoc.getText().isEmpty() || cbTipo.getSelectedItem() == null ) {
 		            JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos antes de intentar modificar el empleado",
 		                    "Campos vacíos", JOptionPane.WARNING_MESSAGE);
 		            return; 
@@ -180,7 +182,7 @@ public class ModificarEmpleado extends JDialog {
 		        double salario = Double.parseDouble(tfSalario.getText());
 		        int cantComandas = Integer.parseInt(tfCantCom.getText());
 		        int cantCocteles = Integer.parseInt(tfCantCoc.getText());
-		        String tipo = tfTipo.getText();
+		        String tipo = cbTipo.getSelectedItem().toString();
 		       
 		        Empleado_DTO empleadoModificado = new Empleado_DTO(dni, nombre, apellido,
 		        		antiguedad, salario, cantComandas, cantCocteles, tipo);
@@ -197,7 +199,6 @@ public class ModificarEmpleado extends JDialog {
 		            tfSalario.setText("");
 		            tfCantCom.setText("");
 		            tfCantCoc.setText("");
-		            tfTipo.setText("");
 		        } else {
 		            JOptionPane.showMessageDialog(null, "Error al modificar el cliente", "Error", JOptionPane.ERROR_MESSAGE);
 		        }
@@ -231,16 +232,20 @@ public class ModificarEmpleado extends JDialog {
 		        Empleado_DTO empleado = empleadoDAO.buscar(dni);
 
 		        if (empleado != null) {
+		            dniEncontrado = true;
 		            tfNombre.setText(empleado.getNombre());
 		            tfApellido.setText(empleado.getApellido());
 		            tfAntiguedad.setText(String.valueOf(empleado.getAntiguedad()));
 		            tfSalario.setText(String.valueOf(empleado.getSalario()));
 		            tfCantCom.setText(String.valueOf(empleado.getCantComandas()));
 		            tfCantCoc.setText(String.valueOf(empleado.getCantCocteles()));
-		            tfTipo.setText(empleado.getTipoEmpleado());
+		            cbTipo.setSelectedItem(empleado.getTipoEmpleado());
 		        } else {
+		            dniEncontrado = false;
 		            JOptionPane.showMessageDialog(null, "Empleado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
 		        }
+
+		        actualizarEstadoCamposTexto();
 		    }
 		});
 		
@@ -278,5 +283,14 @@ public class ModificarEmpleado extends JDialog {
 		button.setBackground(new Color(30, 144, 255));
 		button.setForeground(Color.WHITE);
 		button.setFocusPainted(false); 
+	}
+	private void actualizarEstadoCamposTexto() {
+	    tfNombre.setEditable(dniEncontrado);
+	    tfApellido.setEditable(dniEncontrado);
+	    tfAntiguedad.setEditable(dniEncontrado);
+	    tfSalario.setEditable(dniEncontrado);
+	    tfCantCom.setEditable(dniEncontrado);
+	    tfCantCoc.setEditable(dniEncontrado);
+	    cbTipo.setEnabled(dniEncontrado);
 	}
 }

@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -26,6 +27,8 @@ public class GestionEmpleados extends JDialog {
      */
     public GestionEmpleados() {
         setBounds(100, 100, 451, 564);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout());
 
         // Panel para la imagen de fondo

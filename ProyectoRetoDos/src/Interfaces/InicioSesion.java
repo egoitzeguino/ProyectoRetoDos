@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -39,6 +40,8 @@ public class InicioSesion extends JDialog {
     	setTitle("Inicio de sesion");
     	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
         setBounds(100, 100, 450, 586);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         getContentPane().add(contentPanel, BorderLayout.CENTER);

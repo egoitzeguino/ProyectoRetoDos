@@ -51,9 +51,9 @@ public class EliminarEmpleado extends JDialog {
 		setTitle("Baja de empleado");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
 		setModal(true);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);		
 		setBounds(100, 100, 561, 611);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		
 		

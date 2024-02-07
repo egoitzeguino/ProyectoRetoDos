@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public class Fichar extends JDialog {
     	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
     	
     	setBounds(100, 100, 772, 702);
+    	setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
         contentPanel = new JPanel() {
             @Override
@@ -239,44 +241,46 @@ public class Fichar extends JDialog {
 		JButton btManual = new JButton("FICHAR MANUAL");
 		btManual.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
+		        String dniEmpleado = tfDni.getText();
+		        String entradaString = tfEntrada.getText();
+		        String salidaString = tfSalida.getText();
+
+		        // Validación de campos
+		        if (entradaString.isEmpty() || salidaString.isEmpty()) {
+		            JOptionPane.showMessageDialog(null, "Por favor, completa los campos de entrada y salida.", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
+
 		        try {
-		            String dniEmpleado = tfDni.getText();
-		            String strEntrada = tfEntrada.getText();
-		            String strSalida = tfSalida.getText();
-
 		            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		            Date entradaDate = new Date(dateFormat.parse(entradaString).getTime());
+		            Date salidaDate = new Date(dateFormat.parse(salidaString).getTime());
 
-		            java.util.Date entradaDate = dateFormat.parse(strEntrada);
-		            java.util.Date salidaDate = dateFormat.parse(strSalida);
-
-		            Timestamp horarioEntrada = new Timestamp(entradaDate.getTime());
-		            Timestamp horarioSalida = new Timestamp(salidaDate.getTime());
-
-
-		            long tiempoTrabajadoMillis = horarioSalida.getTime() - horarioEntrada.getTime();
+		            long tiempoTrabajadoMillis = salidaDate.getTime() - entradaDate.getTime();
 		            double horasTrabajadas = tiempoTrabajadoMillis / (1000.0 * 60.0 * 60.0);
 
-		            Fichaje_DTO fichajeManual = new Fichaje_DTO(dniEmpleado, horarioEntrada, horarioSalida, horasTrabajadas);
+		            Fichaje_DTO fichajeManual = new Fichaje_DTO(dniEmpleado, new Timestamp(entradaDate.getTime()), new Timestamp(salidaDate.getTime()), horasTrabajadas);
 
 		            Fichaje_DAO fichajeDAO = new Fichaje_DAO();
 		            if (fichajeDAO.insertar(fichajeManual)) {
 		                JOptionPane.showMessageDialog(null, "Fichaje manual registrado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-		                entradaRegistrada = true;
-		                tfEntrada.setText("");
-		                tfSalida.setText("");
 		            } else {
 		                JOptionPane.showMessageDialog(null, "Error al registrar el fichaje manual", "Error", JOptionPane.ERROR_MESSAGE);
+		                System.err.println("Error en la inserción: No se pudo registrar el fichaje manual.");
 		            }
-		        } catch (Exception ex) {
-		            JOptionPane.showMessageDialog(null, "Error al procesar las fechas: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		        } catch (ParseException ex) {
 		            ex.printStackTrace();
+		            JOptionPane.showMessageDialog(null, "Error al parsear fechas. Utiliza el formato (AAAA-MM-dd HH:mm:00)", "Error", JOptionPane.ERROR_MESSAGE);
 		        }
 		    }
 		});
 
+
+
 		btManual.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btManual.setBounds(354, 50, 150, 54);
 		panel_2.add(btManual);
+
 		
 		JLabel lblNewLabel_4 = new JLabel("(AAAA-MM-dd HH:mm:00)");
 		lblNewLabel_4.setBounds(144, 36, 142, 13);
@@ -330,15 +334,10 @@ public class Fichar extends JDialog {
             entradaRegistrada = true;
             JOptionPane.showMessageDialog(null, "Ya has registrado la entrada para hoy. Puedes fichar la salida.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else {
-            ArrayList<Fichaje_DTO> fichajesSinSalida = fichajeDAO.obtenerFichajesSinSalida();
-            if (!fichajesSinSalida.isEmpty()) {
-                entradaRegistrada = true;
-            } else {
-                entradaRegistrada = false;
-            }
+            entradaRegistrada = false;
         }
     }
-    
+
     public static LocalDate obtenerDiaActual() {
         return LocalDate.now();
     }

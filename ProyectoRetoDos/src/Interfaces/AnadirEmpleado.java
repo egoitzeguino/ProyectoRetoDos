@@ -49,8 +49,8 @@ public class AnadirEmpleado extends JDialog {
     	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
         setModal(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setLocationRelativeTo(null);
         setBounds(100, 100, 544, 629);
+        setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         getContentPane().add(contentPanel, BorderLayout.CENTER);

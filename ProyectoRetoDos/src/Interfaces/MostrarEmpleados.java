@@ -52,8 +52,8 @@ public class MostrarEmpleados extends JDialog {
     	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
         setModal(true);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setLocationRelativeTo(null);
         setBounds(100, 100, 889, 575);
+        setLocationRelativeTo(null);
         contentPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {

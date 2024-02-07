@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -53,9 +54,11 @@ public class EmpleadoDeterminado extends JDialog {
      */
     public EmpleadoDeterminado(boolean dniEditable) {
     	setTitle("Detalle de empleado");
+    	setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
         setModal(true);
         setBounds(100, 100, 450, 615);
+        setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
         contentPanel = new JPanel() {
             @Override
