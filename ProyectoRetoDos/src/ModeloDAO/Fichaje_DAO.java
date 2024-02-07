@@ -27,15 +27,12 @@ public class Fichaje_DAO implements Patron_DAO<Fichaje_DTO> {
     ConexionSGL con = ConexionSGL.getInstancia();
 
     @Override
-
     public boolean insertar(Fichaje_DTO fichaje) {
         if (existeFichajeEntradaParaHoy(fichaje.getDni())) {
             return false;
         }
 
-        PreparedStatement ps = null;
-        try {
-            ps = con.getCon().prepareStatement(SQL_INSERT);
+        try (PreparedStatement ps = con.getCon().prepareStatement(SQL_INSERT)) {
             ps.setString(1, fichaje.getDni());
             ps.setTimestamp(2, new java.sql.Timestamp(fichaje.getHorarioEntrada().getTime()));
 
@@ -52,17 +49,11 @@ public class Fichaje_DAO implements Patron_DAO<Fichaje_DTO> {
             return resultado > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            // Manejo de excepciones - puedes mostrar un mensaje de error aquí o lanzar una excepción personalizada si es necesario
+            return false;
         }
-        return false;
     }
+
 
 
     @Override

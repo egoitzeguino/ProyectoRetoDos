@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class Fichar extends JDialog {
     public Fichar() {
     	
     	setBounds(100, 100, 772, 702);
+    	setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBackground(Color.WHITE); 
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -229,36 +231,52 @@ public class Fichar extends JDialog {
 		            String strEntrada = tfEntrada.getText();
 		            String strSalida = tfSalida.getText();
 
-		            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Formato completo
 
 		            java.util.Date entradaDate = dateFormat.parse(strEntrada);
 		            java.util.Date salidaDate = dateFormat.parse(strSalida);
 
+		            // Impresiones de control
+		            System.out.println("Horario Entrada: " + dateFormat.format(entradaDate));
+		            System.out.println("Horario Salida: " + dateFormat.format(salidaDate));
+
 		            Timestamp horarioEntrada = new Timestamp(entradaDate.getTime());
 		            Timestamp horarioSalida = new Timestamp(salidaDate.getTime());
 
+<<<<<<< Updated upstream
 		            // Calcula la diferencia entre la salida y entrada para obtener las horas trabajadas
 		            long tiempoTrabajadoMillis = horarioSalida.getTime() - horarioEntrada.getTime();
 		            double horasTrabajadas = tiempoTrabajadoMillis / (1000.0 * 60.0 * 60.0);
 
 		            Fichaje_DTO fichajeManual = new Fichaje_DTO(dniEmpleado, horarioEntrada, horarioSalida, horasTrabajadas);
+=======
+		            Fichaje_DTO fichajeManual = new Fichaje_DTO(dniEmpleado, horarioEntrada, horarioSalida, 0.0);
+>>>>>>> Stashed changes
 
 		            Fichaje_DAO fichajeDAO = new Fichaje_DAO();
 		            if (fichajeDAO.insertar(fichajeManual)) {
+		                System.out.println("Fichaje manual registrado correctamente");
 		                JOptionPane.showMessageDialog(null, "Fichaje manual registrado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 		                entradaRegistrada = true;
 		                tfEntrada.setText("");
 		                tfSalida.setText("");
 		            } else {
+		                System.out.println("Error al registrar el fichaje manual");
 		                JOptionPane.showMessageDialog(null, "Error al registrar el fichaje manual", "Error", JOptionPane.ERROR_MESSAGE);
 		            }
+		        } catch (ParseException ex) {
+		            System.out.println("Error al parsear las fechas: " + ex.getMessage());
+		            JOptionPane.showMessageDialog(null, "Error al parsear las fechas: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		            ex.printStackTrace();
 		        } catch (Exception ex) {
+		            System.out.println("Error al procesar las fechas: " + ex.getMessage());
 		            JOptionPane.showMessageDialog(null, "Error al procesar las fechas: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		            ex.printStackTrace();
 		        }
 		    }
 		});
 
+        
 		btManual.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btManual.setBounds(354, 50, 150, 54);
 		panel_2.add(btManual);
@@ -322,6 +340,7 @@ public class Fichar extends JDialog {
             entradaRegistrada = true;
             JOptionPane.showMessageDialog(null, "Ya has registrado la entrada para hoy. Puedes fichar la salida.", "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else {
+<<<<<<< Updated upstream
             // Verificar si hay registros con entrada pero sin salida
             ArrayList<Fichaje_DTO> fichajesSinSalida = fichajeDAO.obtenerFichajesSinSalida();
             if (!fichajesSinSalida.isEmpty()) {
@@ -329,9 +348,12 @@ public class Fichar extends JDialog {
             } else {
                 entradaRegistrada = false; // Importante reiniciar el valor si no hay registros sin salida
             }
+=======
+            entradaRegistrada = false;
+>>>>>>> Stashed changes
         }
     }
-    
+
     public static LocalDate obtenerDiaActual() {
         return LocalDate.now();
     }
