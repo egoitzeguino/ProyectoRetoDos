@@ -136,12 +136,12 @@ public class AnadirEmpleado extends JDialog {
         tfSalario.setBounds(237, 338, 96, 19);
         contentPanel.add(tfSalario);
 
-        tfCantCom = new JTextField();
+        tfCantCom = new JTextField("0");
         tfCantCom.setColumns(10);
         tfCantCom.setBounds(283, 398, 96, 19);
         contentPanel.add(tfCantCom);
 
-        tfCantCoc = new JTextField();
+        tfCantCoc = new JTextField("0");
         tfCantCoc.setColumns(10);
         tfCantCoc.setBounds(283, 440, 96, 19);
         contentPanel.add(tfCantCoc);
@@ -195,6 +195,7 @@ public class AnadirEmpleado extends JDialog {
                                 panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
                                 panel_1.setBounds(26, 274, 476, 97);
                                 contentPanel.add(panel_1);
+                                panel_1.setLayout(null);
                                 
                                 JPanel panel_2 = new JPanel();
                                 panel_2.setBackground(new Color(135, 206, 250));

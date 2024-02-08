@@ -29,7 +29,7 @@ tortugajuanes.empleado.nombre_emp,
   tortugajuanes.empleado 
   INNER JOIN tortugajuanes.fichaje ON tortugajuanes.empleado.dni = tortugajuanes.fichaje.dni 
   WHERE 
-  tortugajuanes.empleado.dni =  $P{dni} ]]>
+  tortugajuanes.empleado.dni =  $P{dni}]]>
 	</queryString>
 	<field name="nombre_emp" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="nombre_emp"/>
@@ -75,7 +75,7 @@ tortugajuanes.empleado.nombre_emp,
 		<groupHeader>
 			<band height="27">
 				<frame>
-					<reportElement mode="Opaque" x="0" y="3" width="721" height="24" forecolor="#B89F7D" backcolor="#000000" uuid="f24569ed-2518-465a-a480-0c195aacd180"/>
+					<reportElement mode="Opaque" x="0" y="3" width="721" height="24" forecolor="#B89F7D" backcolor="#3399FF" uuid="f24569ed-2518-465a-a480-0c195aacd180"/>
 					<textField textAdjust="StretchHeight">
 						<reportElement style="SubTitle" x="2" y="0" width="148" height="24" forecolor="#FFFFFF" uuid="5b7282d2-5169-4db4-b85a-e2391d4d4e66"/>
 						<textElement>
@@ -113,7 +113,7 @@ tortugajuanes.empleado.nombre_emp,
 					</textField>
 				</frame>
 				<rectangle>
-					<reportElement x="725" y="3" width="77" height="24" backcolor="#666666" uuid="70e1e931-2edd-4f3d-b09b-b9da04709f25"/>
+					<reportElement x="725" y="3" width="77" height="24" backcolor="#3399FF" uuid="70e1e931-2edd-4f3d-b09b-b9da04709f25"/>
 					<graphicElement>
 						<pen lineWidth="0.0"/>
 					</graphicElement>
@@ -187,7 +187,7 @@ tortugajuanes.empleado.nombre_emp,
 					<textElement>
 						<font size="21"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{total_horas_suma} ]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{total_horas_suma}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -202,7 +202,7 @@ tortugajuanes.empleado.nombre_emp,
 				<imageExpression><![CDATA["C:/Users/e.eguino/Desktop/2EVAL/PROYECTOECLIPSE/ProyectoRetoDosGit/tortuga.png"]]></imageExpression>
 			</image>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="721" height="66" backcolor="#000000" uuid="d8d9e644-3a32-491d-97cb-a277aff17133"/>
+				<reportElement mode="Opaque" x="0" y="0" width="721" height="66" backcolor="#3399FF" uuid="d8d9e644-3a32-491d-97cb-a277aff17133"/>
 				<staticText>
 					<reportElement style="Title" x="6" y="0" width="643" height="66" uuid="27d8f6ee-f0a9-44f6-a160-1763c3b00f30"/>
 					<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
@@ -213,7 +213,7 @@ tortugajuanes.empleado.nombre_emp,
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="70" width="721" height="32" forecolor="#000000" backcolor="#CC0000" uuid="b0c895f6-6dbd-477d-9858-9ad66af087e1"/>
+				<reportElement mode="Opaque" x="0" y="70" width="721" height="32" forecolor="#000000" backcolor="#66CCFF" uuid="b0c895f6-6dbd-477d-9858-9ad66af087e1"/>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="553" y="12" width="144" height="20" forecolor="#FFFFFF" uuid="a33fce3b-20c1-4696-873a-fe134d1e7d88"/>
 					<textElement textAlignment="Right">
@@ -277,7 +277,7 @@ tortugajuanes.empleado.nombre_emp,
 	<pageFooter>
 		<band height="25" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#000000" uuid="ffb10ec8-0371-4545-8eaa-96d62ad3cec0"/>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#3399FF" uuid="ffb10ec8-0371-4545-8eaa-96d62ad3cec0"/>
 				<textField evaluationTime="Report">
 					<reportElement style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" uuid="b5521ea6-5f36-4864-856f-58d0bcd011f2"/>
 					<textElement verticalAlignment="Middle">

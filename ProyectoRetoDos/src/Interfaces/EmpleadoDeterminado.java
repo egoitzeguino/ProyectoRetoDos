@@ -176,6 +176,15 @@ public class EmpleadoDeterminado extends JDialog {
         JButton btInforme = new JButton("INFORME DE EMPLEADO");
         btInforme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (tfDni.getText().isEmpty()) {
+		            JOptionPane.showMessageDialog(null, "No has introducido un DNI", "Error", JOptionPane.ERROR_MESSAGE);
+		            return;
+		        }
+				String dni1 = tfDni.getText();
+		        Empleado_DAO empleadoDAO = new Empleado_DAO();
+		        Empleado_DTO empleado = empleadoDAO.buscar(dni1);
+
+		        if (empleado != null) {
 				Component parentComponent = (Component) e.getSource();
 				Object[] options = {"Abrir", "Descargar", "Cancelar"};
 				int opcion = JOptionPane.showOptionDialog(
@@ -223,7 +232,9 @@ public class EmpleadoDeterminado extends JDialog {
 				} else {
 					//No hace nada
 				}
-				
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Empleado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+		        }
 			}
 		});
         btInforme.setFont(new Font("Tahoma", Font.BOLD, 12));

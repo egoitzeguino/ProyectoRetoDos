@@ -43,6 +43,7 @@ public class PantallaInicio extends JFrame {
     	setTitle("Tortuga Juanes");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 308);
+        setLocationRelativeTo(null);
         contentPane = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {

@@ -154,6 +154,8 @@ public class InicioSesion extends JDialog {
                     ge.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Credenciales incorrectas. Inténtalo de nuevo.", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                    tfUsuario.setText("");
+                    tfContrasena.setText("");
                 }
             }
         });
