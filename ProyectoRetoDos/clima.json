@@ -1,0 +1,51 @@
+[
+  {
+    "Fecha": "2024-02-08",
+    "TemperaturaMaxima": "17",
+    "TemperaturaMinima": "13",
+    "EstadoCielo": "Cubierto con lluvia",
+    "VelocidadViento": "30"
+  },
+  {
+    "Fecha": "2024-02-09",
+    "TemperaturaMaxima": "20",
+    "TemperaturaMinima": "11",
+    "EstadoCielo": "Muy nuboso con lluvia",
+    "VelocidadViento": "20"
+  },
+  {
+    "Fecha": "2024-02-10",
+    "TemperaturaMaxima": "15",
+    "TemperaturaMinima": "8",
+    "EstadoCielo": "Intervalos nubosos con lluvia",
+    "VelocidadViento": "25"
+  },
+  {
+    "Fecha": "2024-02-11",
+    "TemperaturaMaxima": "15",
+    "TemperaturaMinima": "6",
+    "EstadoCielo": "Muy nuboso con lluvia",
+    "VelocidadViento": "10"
+  },
+  {
+    "Fecha": "2024-02-12",
+    "TemperaturaMaxima": "15",
+    "TemperaturaMinima": "6",
+    "EstadoCielo": "Muy nuboso con lluvia",
+    "VelocidadViento": "15"
+  },
+  {
+    "Fecha": "2024-02-13",
+    "TemperaturaMaxima": "18",
+    "TemperaturaMinima": "5",
+    "EstadoCielo": "Muy nuboso con lluvia",
+    "VelocidadViento": "20"
+  },
+  {
+    "Fecha": "2024-02-14",
+    "TemperaturaMaxima": "20",
+    "TemperaturaMinima": "10",
+    "EstadoCielo": "Muy nuboso con lluvia escasa",
+    "VelocidadViento": "0"
+  }
+]
