@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -49,7 +50,7 @@ public class Fichar extends JDialog {
     public Fichar() {
     	setTitle("Fichar Horario");
     	setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\e.eguino\\Desktop\\2EVAL\\PROYECTOECLIPSE\\ProyectoRetoDosGit\\markel1.jpg"));
-    	
+    	setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     	setBounds(100, 100, 772, 702);
     	setLocationRelativeTo(null);
         getContentPane().setLayout(new BorderLayout());
@@ -108,7 +109,7 @@ public class Fichar extends JDialog {
 		contentPanel.add(lbSalida);
 		
 		tfSalida = new JTextField();
-		tfSalida.setBounds(229, 539, 131, 19);
+		tfSalida.setBounds(229, 539, 148, 19);
 		contentPanel.add(tfSalida);
 		tfSalida.setColumns(10);
 		
@@ -169,7 +170,7 @@ public class Fichar extends JDialog {
 		            Fichaje_DTO fichajeEntrada = new Fichaje_DTO(dniEmpleado1, horarioEntrada, null, 0.0);
 
 		            Fichaje_DAO fichajeDAO = new Fichaje_DAO();
-		            if (fichajeDAO.insertar(fichajeEntrada)) {
+		            if (fichajeDAO.insertarAuto(fichajeEntrada)) {
 		                JOptionPane.showMessageDialog(null, "Fichaje de entrada registrado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 		                entradaRegistrada = true;
 		            } else {

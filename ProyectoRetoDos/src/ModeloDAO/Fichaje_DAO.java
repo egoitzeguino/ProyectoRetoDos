@@ -21,6 +21,7 @@ public class Fichaje_DAO implements Patron_DAO<Fichaje_DTO> {
     private static final String SQL_FIND = "SELECT * FROM fichaje WHERE dni = ?";
     private static final String SQL_FINDALL = "SELECT * FROM fichaje";
     private static final String SQL_FIND_LAST_BY_DNI = "SELECT * FROM fichaje WHERE dni = ? ORDER BY horario_ent DESC LIMIT 1";
+    private static final String SQL_FIND_ENTRADA = "SELECT * FROM fichaje WHERE dni = ? AND horario_ent = ? AND horario_sal = ?";
     private static final String SQL_FIND_ENTRADA_HOY = "SELECT * FROM fichaje WHERE dni = ? AND DATE(horario_ent) = CURRENT_DATE";
     private static final String SQL_FIND_SALIDA ="SELECT dni, horario_ent, horario_sal, total_horas FROM fichaje "
     		+ "WHERE horario_ent IS NOT NULL AND horario_sal IS NULL";
@@ -28,7 +29,7 @@ public class Fichaje_DAO implements Patron_DAO<Fichaje_DTO> {
 
     @Override
     public boolean insertar(Fichaje_DTO fichaje) {
-        if (existeFichajeEntradaParaHoy(fichaje.getDni())) {
+        if (existeFichajeEntrada(fichaje.getDni(), fichaje.getHorarioEntrada(), fichaje.getHorarioSalida())) {
             return false;
         }
 
@@ -53,7 +54,36 @@ public class Fichaje_DAO implements Patron_DAO<Fichaje_DTO> {
             return false;
         }
     }
+    
+    
+    public boolean insertarAuto(Fichaje_DTO fichaje) {
+        if (existeFichajeEntradaHoy(fichaje.getDni())) {
+            return false;
+        }
 
+        try (PreparedStatement ps = con.getCon().prepareStatement(SQL_INSERT)) {
+            ps.setString(1, fichaje.getDni());
+            ps.setTimestamp(2, new java.sql.Timestamp(fichaje.getHorarioEntrada().getTime()));
+
+            if (fichaje.getHorarioSalida() != null) {
+                ps.setTimestamp(3, new java.sql.Timestamp(fichaje.getHorarioSalida().getTime()));
+            } else {
+                ps.setNull(3, java.sql.Types.TIMESTAMP);
+            }
+
+            ps.setDouble(4, fichaje.getTotalHoras());
+
+            int resultado = ps.executeUpdate();
+
+            return resultado > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Manejo de excepciones - puedes mostrar un mensaje de error aquí o lanzar una excepción personalizada si es necesario
+            return false;
+        }
+    }
+    
+    
 
 
     @Override
@@ -239,18 +269,21 @@ public class Fichaje_DAO implements Patron_DAO<Fichaje_DTO> {
         return null;
     }
 
-    public boolean existeFichajeEntradaParaHoy(String dni) {
+    public boolean existeFichajeEntrada(String dni, Timestamp fechaEntrada, Timestamp fechaSalida) {
 
         Fichaje_DAO fichajeDAO = new Fichaje_DAO();
-        Fichaje_DTO fichajeExistente = fichajeDAO.obtenerFichajeEntradaParaHoy(dni);
+        Fichaje_DTO fichajeExistente = fichajeDAO.obtenerFichajeEntrada(dni, fechaEntrada, fechaSalida);
 
         return fichajeExistente != null;
     }
-    public Fichaje_DTO obtenerFichajeEntradaParaHoy(String dni) {
+    public Fichaje_DTO obtenerFichajeEntrada(String dni, Timestamp fechaEntrada, Timestamp fechaSalida) {
 
-        try (PreparedStatement ps = con.getCon().prepareStatement(SQL_FIND_ENTRADA_HOY)) {
+        try (PreparedStatement ps = con.getCon().prepareStatement(SQL_FIND_ENTRADA)) {
             ps.setString(1, dni);
+            ps.setTimestamp(2, fechaEntrada);
+            ps.setTimestamp(3, fechaSalida);
             ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
                 return new Fichaje_DTO(
                         rs.getString("dni"),
@@ -264,6 +297,8 @@ public class Fichaje_DAO implements Patron_DAO<Fichaje_DTO> {
         }
         return null;
     }
+
+    
     public ArrayList<Fichaje_DTO> obtenerFichajesSinSalida() {
         ArrayList<Fichaje_DTO> fichajes = new ArrayList<>();
         PreparedStatement ps = null;
@@ -296,6 +331,33 @@ public class Fichaje_DAO implements Patron_DAO<Fichaje_DTO> {
             }
         }
         return fichajes;
+    }
+    
+    
+    public boolean existeFichajeEntradaHoy(String dni) {
+
+        Fichaje_DAO fichajeDAO = new Fichaje_DAO();
+        Fichaje_DTO fichajeExistente = fichajeDAO.obtenerFichajeEntradaHoy(dni);
+
+        return fichajeExistente != null;
+    }
+    public Fichaje_DTO obtenerFichajeEntradaHoy(String dni) {
+
+        try (PreparedStatement ps = con.getCon().prepareStatement(SQL_FIND_ENTRADA_HOY)) {
+            ps.setString(1, dni);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Fichaje_DTO(
+                        rs.getString("dni"),
+                        rs.getTimestamp("horario_ent"),
+                        rs.getTimestamp("horario_sal"),
+                        rs.getDouble("total_horas")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

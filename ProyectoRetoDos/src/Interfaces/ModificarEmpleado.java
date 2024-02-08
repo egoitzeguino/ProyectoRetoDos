@@ -163,7 +163,7 @@ public class ModificarEmpleado extends JDialog {
         cbTipo.setBounds(258, 433, 134, 19);
         contentPanel.add(cbTipo);
 		
-		JButton btModificar = new JButton("MODIFICAR CLIENTE");
+		JButton btModificar = new JButton("MODIFICAR EMPLEADO");
 		btModificar.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
 		    	if (tfDni.getText().isEmpty() || tfNombre.getText().isEmpty() || tfApellido.getText().isEmpty()
